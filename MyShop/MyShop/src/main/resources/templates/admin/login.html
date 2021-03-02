@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+    <title>管理员登录</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- **********************************************************************************************************************************************************
+  MAIN CONTENT
+  *********************************************************************************************************************************************************** -->
+
+<div id="login-page">
+    <div class="container">
+
+        <form class="form-login" th:action="@{/admin/dologin}" method="post">
+            <h2 class="form-login-heading">管理员登录</h2>
+            <div class="login-wrap">
+                <input name="username" type="text" class="form-control" placeholder="请输入用户名" autofocus>
+                <br />
+                <input name="password" type="password" class="form-control" placeholder="请输入密码">
+                <label class="checkbox">
+		                <span class="pull-right">
+		                    <a data-toggle="modal" href="#">忘记密码？</a>
+		                </span>
+                </label>
+                <button class="btn btn-theme btn-block" type="submit">
+                    <i class="fa fa-lock"></i>登 录</button>
+                <hr>
+
+                <div class="login-social-link centered">
+                    <p th:text="${news}"></p>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.backstretch.min.js"></script>
+<script>$.backstretch("assets/img/login-bg.jpg", {speed: 500});</script>
+</body>
+</html>

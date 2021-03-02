@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzm.myshop.repository.MenuMapper">
+    <!-- 默认resultMap -->
+    <resultMap id="menu" type="com.xzm.myshop.entity.po.Menu">
+        <id column="menu_id" property="menu_id" />
+        <result column="menu_name" property="menu_name" />
+        <result column="menu_url" property="menu_url" />
+        <result column="pid" property="pid" />
+    </resultMap>
+
+    <!-- 实现方法：selectMenuListByAdminName -->
+    <select id="selectMenuListByAdminName" resultMap="menu">
+        select m.*
+        from admin a
+        inner join admin_role ar on a.admin_id=ar.admin_id
+        inner join role_permission rp on rp.role_id=ar.role_id
+        inner join permission_menu pm on pm.permission_id=rp.permission_id
+        inner join menu m on m.menu_id=pm.menu_id
+        where a.admin_name=#{admin_name}
+    </select>
+
+</mapper>

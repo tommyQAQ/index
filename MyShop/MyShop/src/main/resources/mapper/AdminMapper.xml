@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzm.myshop.repository.AdminMapper">
+
+    <!--默认的resultMap
+        里面需要一个身份的集合对象：
+        可以直接在当前定义，也可以再单独定义一个
+    -->
+    <resultMap id="admin" type="com.xzm.myshop.entity.po.Admin">
+        <id column="admin_id" property="admin_id"/>
+        <result column="admin_name" property="admin_name" />
+        <result column="admin_pass" property="admin_pass" />
+        <result column="admin_nickname" property="admin_nickname" />
+        <result column="admin_status" property="admin_status" />
+        <!--
+            身份对象的集合，传入当前对象的id，
+            调用身份mapper中的方法，
+            同时定义为懒加载lazy -（默认只获取当前admin，什么时候用到集合，再去查询）
+         -->
+        <collection
+                property="roleList"
+                ofType="com.xzm.myshop.entity.po.Role"
+                column="admin_id"
+                select="com.xzm.myshop.repository.RoleMapper.selectRoleListByAdminId"
+                fetchType="lazy">
+        </collection>
+    </resultMap>
+
+    <!--实现方法：getAdminByAdminName-->
+    <select id="getAdminByAdminName" resultMap="admin">
+        select * from `admin` where `admin_name`=#{admin_name} and `admin_status`=1
+    </select>
+
+    <!--按照搜索条件 查询员工数据数量-->
+    <select id="selectAdminCount" resultType="java.lang.Integer">
+        select count(`admin_id`) from `admin`
+        <where>
+            `admin_status`=1
+            <if test="key!=null and key!=''">
+                and (`admin_name` like "%"#{key}"%" or `admin_nickname` like "%"#{key}"%")
+            </if>
+        </where>
+    </select>
+    <!--查询用户列表-->
+    <resultMap id="adminDefault" type="com.xzm.myshop.entity.po.Admin">
+        <id column="admin_id" property="admin_id"/>
+        <result column="admin_name" property="admin_name" />
+        <result column="admin_pass" property="admin_pass" />
+        <result column="admin_nickname" property="admin_nickname" />
+        <result column="admin_status" property="admin_status" />
+    </resultMap>
+    <select id="selectAdminList" resultMap="adminDefault">
+        select * from `admin`
+        <where>
+            `admin_status`=1
+            <if test="key!=null and key!=''">
+                and (`admin_name` like "%"#{key}"%" or `admin_nickname` like "%"#{key}"%")
+            </if>
+        </where>
+        limit #{start},#{rows}
+    </select>
+
+    <!--按照id删除（更新状态）-->
+    <update id="deleteAdminByAdminId">
+        update `admin` set `admin_status`=0 where `admin_id` = #{admin_id}
+    </update>
+
+    <!--按照Vo对象添加员工-->
+    <insert id="insertAdminByAddAdminVo"
+            parameterType="com.xzm.myshop.entity.vo.AddAdminVo"
+            useGeneratedKeys="true"
+            keyProperty="addAdminVo.admin_id">
+        insert into `admin`
+        values(null,#{addAdminVo.admin_name},#{addAdminVo.admin_pass},#{addAdminVo.admin_nickname},1)
+
+    </insert>
+
+    <!--基于Vo对象 添加员工与角色的参照-->
+    <insert id="insertAdminRoleByAddAdminVo">
+        insert into `admin_role` values
+        <foreach collection="addAdminVo.roles" item="role_id" separator=",">
+            (#{addAdminVo.admin_id},#{role_id})
+        </foreach>
+    </insert>
+
+    <!--实现selectAdminVo-->
+    <select id="selectAdminVo" resultType="com.xzm.myshop.entity.vo.AdminVo">
+        select * from `admin` where `admin_id`=#{admin_id}
+    </select>
+
+    <!--实现selectAdminRoleVo-->
+    <select id="selectAdminRoleVo" resultType="com.xzm.myshop.entity.vo.AdminRoleVo">
+        select * from role r
+        left join
+        (select role_id as has from admin_role where admin_id=#{admin_id}) ar
+        on ar.has=r.role_id
+    </select>
+    
+    <!--更新员工信息-->
+    <update id="updateAdminByAdminVo">
+        update `admin`
+        <set>
+            <if test="addAdminVo.admin_pass!=null and addAdminVo.admin_pass!=''">
+                `admin_pass`=#{addAdminVo.admin_pass},
+            </if>
+            `admin_nickname`=#{addAdminVo.admin_nickname}
+        </set>
+        where `admin_id`=#{addAdminVo.admin_id}
+    </update>
+
+    <!--实现deleteAdminRoleByAdminId-->
+    <delete id="deleteAdminRoleByAdminId">
+        delete from `admin_role` where `admin_id`=#{admin_id}
+    </delete>
+</mapper>

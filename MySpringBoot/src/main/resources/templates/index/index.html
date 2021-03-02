@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/index.css" />
+</head>
+<body>
+    我的页面<br /><br />
+    <img src="/img/aaa.jpg"/>
+    <br /><br />
+
+    <h3 th:text="${title}">原本内容</h3>
+
+    <h3 th:utext="${title}">原本内容</h3>
+
+    <h3 th:text="名字是+${name}"></h3>
+
+    <h3 th:text="${gender}==1?男:女"></h3>
+
+    <div th:if="${gender}==1">男</div>
+    <div th:if="${gender}==0">女</div>
+
+    <h3 th:text="${user.userId}"></h3>
+
+    <table border="1">
+        <tr>
+            <td>编号</td>
+            <td>姓名</td>
+            <td>密码</td>
+        </tr>
+        <tr th:each="u:${list}">
+            <td th:text="${u.userId}">编号</td>
+            <td th:text="${u.userName}">姓名</td>
+            <td th:text="${u.userPass}">密码</td>
+        </tr>
+    </table>
+
+    <img th:src="@{/img/}+${image}"/><br />
+
+    <form action="/index/getpost" method="post">
+        <input name="userName" type="text" />
+        <input type="submit" value="提交"/>
+    </form>
+    <br />
+    <a href="/index/geturl/555/admin">路径传值</a>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.xzm.myspringboot.repository.UserMapper">
+    <!-- 默认的，参照entity/user.java的实体对象 -->
+    <resultMap id="user" type="com.xzm.myspringboot.entity.User">
+        <id column="userId" property="userId" />
+        <result column="userName" property="userName" />
+        <result column="userPass" property="userPass" />
+        <result column="genderId" property="genderId" />
+        <result column="createTime" property="createTime" />
+    </resultMap>
+
+
+    <!-- 实现:用户列表方法 -->
+    <select id="selectUserList" resultMap="user">
+        select * from `user`;
+    </select>
+
+    <insert id="insertUser"
+            keyProperty="user.uerId"
+            useGeneratedKeys="true"
+            parameterType="com.xzm.myspringboot.entity.User">
+        insert into `user` value(null,#{user.userName},#{user.userPass},#{user.genderId},default);
+    </insert>
+
+    <delete id="deleteUserByuserId">
+        delete from `user` where `userId`=#{userId};
+    </delete>
+
+    <select id="selectUserByuserId" resultMap="user">
+        select * from `user` where `userId`=#{userId};
+    </select>
+
+    <update id="updateUserByuserId">
+        update `user`
+        set `userName`=#{userName}.`userPass`=#{userPass},`genderId`=#{gendaerId}
+        where `userId`=${user.userId};
+    </update>
+    
+    <select id="selectUserBygenderId" resultMap="user">
+        select * from `user` where `genderId`=#{genderId};
+    </select>
+</mapper>
+
+

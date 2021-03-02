@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    添加用户
+    <form action="/user/add" method="post">
+        用户名：
+        <input name="userName" type="text">
+        <br /><br />
+        密码：
+        <input name="userPass" type="text">
+        <br /><br />
+        性别：
+        <select name="genderId">
+            <option value="1">男</option>
+            <option value="0">女</option>
+            <option value=null>保密</option>
+        </select>
+        <br /><br />
+
+        <input type="submit" value="提交" />
+        <div th:text="${message}"></div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>用户模块主页面</title>
+    <link rel="stylesheet" href="/css/user.css" >
+
+</head>
+<body>
+    <h3 class="title">用户列表</h3>
+    <table border="1px" cellpadding="5px" cellspacing="0px">
+        <tr>
+            <td>编号</td>
+            <td>姓名</td>
+            <td>密码</td>
+            <td>性别编号</td>
+            <td>注册时间</td>
+            <td>操作</td>
+        </tr>
+
+        <tr th:each="user:${list}">
+            <td th:text="${user.userId}">编号</td>
+            <td th:text="${user.userName}">姓名</td>
+            <td th:text="${user.userPass}">密码</td>
+            <td th:text="${user.genderId}">性别编号</td>
+            <td th:text="${user.createTime}">注册时间</td>
+            <td>
+                <a th:href="@{/user/delete/}+${user.userId}">删除</a>
+            </td>
+            <td>
+                <a th:href="@{/user/update/}+${user.userId}">编辑</a>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

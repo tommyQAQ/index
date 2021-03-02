@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzm.myshop.repository.RoleMapper">
+    <!-- 默认resultMap -->
+    <resultMap id="role" type="com.xzm.myshop.entity.po.Role">
+        <id column="role_id" property="role_id" />
+        <result column="role_name" property="role_name" />
+    </resultMap>
+
+    <!-- 实现方法：selectRoleListByAdmin -->
+    <select id="selectRoleListByAdminId" resultMap="role">
+        select * from `role` r
+        inner join `admin_role` ar on ar.role_id=r.role_id
+        where ar.admin_id=#{admin_id}
+    </select>
+
+    <!-- 实现方法：SelectRoleListByOperateUrl -->
+    <select id="selectRoleListByOperateUrl" resultMap="role" >
+        select *
+        from operate o
+        inner join permission_operate po on po.operate_id=o.operate_id
+        inner join permission p on p.permission_id=po.permission_id
+        inner join role_permission rp on rp.permission_id=p.permission_id
+        inner join role r on r.role_id=rp.role_id
+        where o.operate_url=#{operate_url}
+    </select>
+
+    <!--根据员工id删除其所有身份-->
+    <delete id="deleteRoleByAdminId">
+        delete from `admin_role` where `admin_id`=#{admin_id}
+    </delete>
+
+    <!--获取身份列表-->
+    <select id="selectRoleList" resultMap="role">
+        select * from `role`
+    </select>
+</mapper>

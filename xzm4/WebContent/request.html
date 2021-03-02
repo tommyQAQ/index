@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用于测试请求方式与处理</title>
+</head>
+<body>
+
+	get请求：组合路径，直接请求访问：<br />
+	<a href="handle?username=admin">
+		http://localhost:8080/xzm/handle?username=admin
+	</a>
+
+	<br /><br />
+	
+	<!-- 
+		id属性是脚本使用的，name属性是服务器获取使用的
+	 -->
+	post请求，就需要表单：<br />
+	<form name="f1" action="handle" method="post">
+		
+		<input name="username" type="text" />
+		
+		<input type="submit" value="post提交" />
+		
+	</form>
+	
+	
+	
+	
+
+
+</body>
+</html>

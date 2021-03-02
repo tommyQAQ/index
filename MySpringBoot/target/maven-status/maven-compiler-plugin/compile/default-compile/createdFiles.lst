@@ -1,0 +1,14 @@
+com\xzm\myspringboot\controller\UserController.class
+com\xzm\myspringboot\entity\Gender.class
+com\xzm\myspringboot\service\impl\GenderService.class
+com\xzm\myspringboot\service\IGenderService.class
+com\xzm\myspringboot\controller\ExController.class
+com\xzm\myspringboot\controller\GenderController.class
+com\xzm\myspringboot\exception\ExceptionConfiguration.class
+com\xzm\myspringboot\repository\GenderMapper.class
+com\xzm\myspringboot\repository\UserMapper.class
+com\xzm\myspringboot\exception\GlobarException.class
+com\xzm\myspringboot\entity\User.class
+com\xzm\myspringboot\service\IUserService.class
+com\xzm\myspringboot\service\impl\UserService.class
+com\xzm\myspringboot\exception\NoRemoveGenderException.class
